@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.abigballofmud.apimonitor.infra.config.ApiMonitorConfiguration,\
+org.abigballofmud.apimonitor.infra.config.MybatisPlusConfig
