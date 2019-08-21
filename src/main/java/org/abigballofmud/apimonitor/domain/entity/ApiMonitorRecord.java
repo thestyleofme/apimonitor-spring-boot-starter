@@ -18,7 +18,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@TableName(value = "xsvc_api_monitor_record")
+@TableName(value = "api_monitor_record")
 public class ApiMonitorRecord {
 
     public static final String FIELD_MONITOR_ID = "monitorId";
