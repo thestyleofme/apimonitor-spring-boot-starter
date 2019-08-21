@@ -1,6 +1,6 @@
 # apimonitor-spring-boot-starter
-基于AOP实现API监控，给需要的监控的接口添加
-@ApiMonitor注解即可自动向api_monitor_record表中插入本次请求相关信息
+基于AOP实现API监控，给需要监控的接口添加
+@ApiMonitor注解即可向api_monitor_record表中插入本次请求相关信息
 
 ## 说明
 
