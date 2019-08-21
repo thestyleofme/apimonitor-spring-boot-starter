@@ -2,23 +2,24 @@ package org.abigballofmud.apimonitor.infra.aspect;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.abigballofmud.apimonitor.api.dto.ApiMonitorRecordDTO;
 import org.abigballofmud.apimonitor.app.service.ApiMonitorRecordService;
 import org.abigballofmud.apimonitor.domain.entity.CallerInfo;
 import org.abigballofmud.apimonitor.infra.constant.CallerInfoConstants;
-import org.abigballofmud.apimonitor.infra.converter.CallerInfoConvertMapper;
+import org.abigballofmud.apimonitor.infra.utils.CallerInfoContextHolder;
 import org.abigballofmud.apimonitor.infra.utils.IpUtil;
 import org.abigballofmud.apimonitor.infra.utils.TimeUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -31,8 +32,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect
 @Slf4j
 public class ApiMonitorAspect {
-
-    private static final String SUCCESS_CODE_START = "2";
 
     private ApiMonitorRecordService apiMonitorRecordService;
 
@@ -59,7 +58,7 @@ public class ApiMonitorAspect {
         if (attributes != null) {
             HttpServletRequest request = attributes.getRequest();
             // request_header
-            dto.setRequestHeader(request.getHeaderNames().toString());
+            this.requestHeaderHandler(request);
             // user_agent
             dto.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
             // referer
@@ -88,7 +87,7 @@ public class ApiMonitorAspect {
                 // response_code
                 dto.setResponseCode(responseCode);
                 // response_status
-                if (responseCode.startsWith(SUCCESS_CODE_START)) {
+                if (HttpStatus.valueOf(response.getStatus()).is2xxSuccessful()) {
                     dto.setResponseStatus("SUCCESS");
                 } else {
                     dto.setResponseStatus("FAIL");
@@ -102,19 +101,46 @@ public class ApiMonitorAspect {
     }
 
     @AfterReturning(pointcut = "pointcut()", returning = "object")
-    public void getAfterReturn(Object object) {
+    public void afterReturning(Object object) {
         // response_entity
         ApiMonitorRecordDTO dto = apiMonitorRecordDTO.get();
         dto.setResponseEntity(object.toString());
-        // 返回信息必须含有调用方信息 service_id tenant_id user_id client_id
-        CallerInfo callerInfo;
-        if (object instanceof CallerInfo) {
-            // 方法只返回CallerInfo
-            callerInfo = (CallerInfo) object;
-        } else {
-            // 默认方法里都会返回CallerInfo
-            callerInfo = CallerInfoConvertMapper.INSTANCE.objectToCallerInfo(object);
+        this.callInfoHandler(dto);
+    }
+
+    @AfterThrowing(pointcut = "pointcut()", throwing = "exception")
+    public void afterThrowing(Exception exception) {
+        // 抛异常时重写返回信息
+        ApiMonitorRecordDTO dto = apiMonitorRecordDTO.get();
+        // response_code
+        dto.setResponseCode(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+        // response_status
+        dto.setResponseStatus("FAIL");
+        // response_entity
+        dto.setResponseEntity(exception.toString());
+        this.callInfoHandler(dto);
+    }
+
+    private void requestHeaderHandler(HttpServletRequest request) {
+        ApiMonitorRecordDTO dto = apiMonitorRecordDTO.get();
+        Enumeration<String> headerNames = request.getHeaderNames();
+        HashMap<String, Object> map = new HashMap<>(16);
+        while (headerNames.hasMoreElements()) {
+            String element = headerNames.nextElement();
+            map.put(element, request.getHeader(element));
         }
+        // request_header
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            dto.setRequestHeader(objectMapper.writeValueAsString(map));
+        } catch (JsonProcessingException e) {
+            log.error("request header[Map -> String] error!");
+        }
+    }
+
+    private void callInfoHandler(ApiMonitorRecordDTO dto) {
+        // 返回信息必须含有调用方信息 serviceId tenantId userId clientId
+        CallerInfo callerInfo = CallerInfoContextHolder.current();
         dto.setServiceId(Optional.ofNullable(callerInfo.getServiceId()).orElse(CallerInfoConstants.DEFAULT_SERVICE_ID));
         dto.setTenantId(Optional.ofNullable(callerInfo.getTenantId()).orElse(CallerInfoConstants.DEFAULT_TENANT_ID));
         dto.setUserId(Optional.ofNullable(callerInfo.getUserId()).orElse(CallerInfoConstants.DEFAULT_USER_ID));
@@ -123,6 +149,6 @@ public class ApiMonitorAspect {
         // 新增API监控记录
         apiMonitorRecordService.insert(dto);
         apiMonitorRecordDTO.remove();
+        CallerInfoContextHolder.clear();
     }
-
 }

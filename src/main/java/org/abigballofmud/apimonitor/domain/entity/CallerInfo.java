@@ -1,8 +1,5 @@
 package org.abigballofmud.apimonitor.domain.entity;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 

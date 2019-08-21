@@ -3,6 +3,10 @@ package org.abigballofmud.apimonitor.infra.config;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
+import org.mybatis.spring.boot.autoconfigure.MybatisLanguageDriverAutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -18,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan({
         "org.abigballofmud.apimonitor.**.mapper"
 })
+@AutoConfigureAfter({MybatisAutoConfiguration.class})
 public class MybatisPlusConfig {
 
     /**
