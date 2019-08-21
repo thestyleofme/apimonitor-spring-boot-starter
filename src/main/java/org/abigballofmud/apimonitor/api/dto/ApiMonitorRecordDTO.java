@@ -108,6 +108,9 @@ public class ApiMonitorRecordDTO {
     @NotNull
     private Long tenantId;
 
+    @ApiModelProperty(value = "角色ID")
+    private Long roleId;
+
     @ApiModelProperty(hidden = true)
     private LocalDateTime creationDate;
 

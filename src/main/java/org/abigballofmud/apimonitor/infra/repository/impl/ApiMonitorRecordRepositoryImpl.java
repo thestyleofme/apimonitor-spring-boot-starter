@@ -42,14 +42,14 @@ public class ApiMonitorRecordRepositoryImpl implements ApiMonitorRecordRepositor
 
     @Override
     public ApiMonitorRecordDTO insert(ApiMonitorRecordDTO apiMonitorRecordDTO) {
-        ApiMonitorRecord entity = ApiMonitorConvertMapper.INSTANCE.DtoToEntity(apiMonitorRecordDTO);
+        ApiMonitorRecord entity = ApiMonitorConvertMapper.INSTANCE.dtoToEntity(apiMonitorRecordDTO);
         apiMonitorRecordMapper.insert(entity);
         return ApiMonitorConvertMapper.INSTANCE.entityToDto(entity);
     }
 
     @Override
     public ApiMonitorRecordDTO update(ApiMonitorRecordDTO apiMonitorRecordDTO) {
-        ApiMonitorRecord entity = ApiMonitorConvertMapper.INSTANCE.DtoToEntity(apiMonitorRecordDTO);
+        ApiMonitorRecord entity = ApiMonitorConvertMapper.INSTANCE.dtoToEntity(apiMonitorRecordDTO);
         apiMonitorRecordMapper.updateById(entity);
         return ApiMonitorConvertMapper.INSTANCE.entityToDto(entity);
     }

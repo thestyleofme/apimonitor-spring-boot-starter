@@ -25,7 +25,8 @@ public class TestServiceImpl implements TestService {
                 serviceId(CallerInfoConstants.DEFAULT_SERVICE_ID).
                 tenantId(CallerInfoConstants.DEFAULT_TENANT_ID).
                 userId(CallerInfoConstants.DEFAULT_USER_ID).
-                clientId(CallerInfoConstants.DEFAULT_CLIENT_ID).build();
+                clientId(CallerInfoConstants.DEFAULT_CLIENT_ID).
+                roleId(CallerInfoConstants.DEFAULT_ROLE_ID).build();
         CallerInfoContextHolder.setCallerInfo(callerInfo);
         // throw new IllegalArgumentException();
         return callerInfo;

@@ -39,4 +39,9 @@ public class CallerInfo {
      */
     private Long clientId;
 
+    /**
+     * 角色ID
+     */
+    private Long roleId;
+
 }

@@ -145,6 +145,7 @@ public class ApiMonitorAspect {
         dto.setTenantId(Optional.ofNullable(callerInfo.getTenantId()).orElse(CallerInfoConstants.DEFAULT_TENANT_ID));
         dto.setUserId(Optional.ofNullable(callerInfo.getUserId()).orElse(CallerInfoConstants.DEFAULT_USER_ID));
         dto.setClientId(Optional.ofNullable(callerInfo.getClientId()).orElse(CallerInfoConstants.DEFAULT_CLIENT_ID));
+        dto.setRoleId(Optional.ofNullable(callerInfo.getRoleId()).orElse(CallerInfoConstants.DEFAULT_ROLE_ID));
         log.debug("ApiMonitorRecordDTO: {}", dto);
         // 新增API监控记录
         apiMonitorRecordService.insert(dto);

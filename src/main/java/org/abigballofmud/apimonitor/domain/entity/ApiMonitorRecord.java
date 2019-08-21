@@ -33,7 +33,7 @@ public class ApiMonitorRecord {
     public static final String FIELD_USER_AGENT = "userAgent";
     public static final String FIELD_CLASS_METHOD = "classMethod";
     public static final String FIELD_REQUEST_PARAM = "requestParam";
-    private static final String FIELD_REFERER ="referer" ;
+    private static final String FIELD_REFERER = "referer";
     public static final String FIELD_REQUEST_TIME = "requestTime";
     public static final String FIELD_RESPONSE_TIME = "responseTime";
     public static final String FIELD_INVOKE_COST = "invokeCost";
@@ -41,6 +41,7 @@ public class ApiMonitorRecord {
     public static final String FIELD_RESPONSE_STATUS = "responseStatus";
     public static final String FIELD_RESPONSE_ENTITY = "responseEntity";
     public static final String FIELD_TENANT_ID = "tenantId";
+    public static final String FIELD_ROLE_ID = "roleId";
     public static final String FIELD_CREATION_DATE = "creationDate";
     public static final String FIELD_CREATED_BY = "createdBy";
     public static final String FIELD_LAST_UPDATE_DATE = "lastUpdateDate";
@@ -95,6 +96,8 @@ public class ApiMonitorRecord {
     private String responseEntity;
 
     private Long tenantId;
+
+    private Long roleId;
 
     private LocalDateTime creationDate;
 

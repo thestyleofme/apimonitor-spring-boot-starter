@@ -17,4 +17,7 @@ public interface CallerInfoConstants {
     Long DEFAULT_CLIENT_ID = -1L;
 
     Long DEFAULT_USER_ID = -1L;
+
+    Long DEFAULT_ROLE_ID = -1L;
+
 }

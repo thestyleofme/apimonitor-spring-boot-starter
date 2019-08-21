@@ -34,6 +34,6 @@ public interface ApiMonitorConvertMapper {
      * @return org.abigballofmud.apimonitor.api.dto.ApiMonitorRecordDTO
      * @author isacc 2019/8/19 21:44
      */
-    ApiMonitorRecord DtoToEntity(ApiMonitorRecordDTO apiMonitorRecordDTO);
+    ApiMonitorRecord dtoToEntity(ApiMonitorRecordDTO apiMonitorRecordDTO);
 
 }
