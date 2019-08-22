@@ -39,7 +39,7 @@ public class ApiMonitorAspect {
         this.apiMonitorRecordService = apiMonitorRecordService;
     }
 
-    private ThreadLocal<ApiMonitorRecordDTO> apiMonitorRecordDTO = new InheritableThreadLocal<>();
+    private static final ThreadLocal<ApiMonitorRecordDTO> API_MONITOR_RECORD_DTO_THREAD_LOCAL = new InheritableThreadLocal<>();
 
     @Pointcut("@annotation(org.abigballofmud.apimonitor.infra.annotation.ApiMonitor)")
     public void pointcut() {
@@ -49,7 +49,7 @@ public class ApiMonitorAspect {
     @Before("pointcut()")
     public void before(JoinPoint joinPoint) {
         ApiMonitorRecordDTO dto = ApiMonitorRecordDTO.builder().build();
-        apiMonitorRecordDTO.set(dto);
+        API_MONITOR_RECORD_DTO_THREAD_LOCAL.set(dto);
         // request_time
         dto.setRequestTime(LocalDateTime.now());
         // request_id
@@ -78,7 +78,7 @@ public class ApiMonitorAspect {
 
     @After("pointcut()")
     public void after() {
-        ApiMonitorRecordDTO dto = apiMonitorRecordDTO.get();
+        ApiMonitorRecordDTO dto = API_MONITOR_RECORD_DTO_THREAD_LOCAL.get();
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
             HttpServletResponse response = attributes.getResponse();
@@ -105,7 +105,7 @@ public class ApiMonitorAspect {
     @AfterReturning(pointcut = "pointcut()", returning = "object")
     public void afterReturning(Object object) {
         // response_entity
-        ApiMonitorRecordDTO dto = apiMonitorRecordDTO.get();
+        ApiMonitorRecordDTO dto = API_MONITOR_RECORD_DTO_THREAD_LOCAL.get();
         dto.setResponseEntity(object.toString());
         this.callInfoHandler(dto);
     }
@@ -113,7 +113,7 @@ public class ApiMonitorAspect {
     @AfterThrowing(pointcut = "pointcut()", throwing = "exception")
     public void afterThrowing(Exception exception) {
         // 抛异常时重写返回信息
-        ApiMonitorRecordDTO dto = apiMonitorRecordDTO.get();
+        ApiMonitorRecordDTO dto = API_MONITOR_RECORD_DTO_THREAD_LOCAL.get();
         // response_code
         dto.setResponseCode(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
         // response_status
@@ -134,7 +134,7 @@ public class ApiMonitorAspect {
         log.debug("ApiMonitorRecordDTO: {}", dto);
         // 新增API监控记录
         apiMonitorRecordService.insert(dto);
-        apiMonitorRecordDTO.remove();
+        API_MONITOR_RECORD_DTO_THREAD_LOCAL.remove();
         CallerInfoContextHolder.clear();
     }
 }
