@@ -86,10 +86,14 @@ public class ApiMonitorRecordDTO {
     @NotNull
     private LocalDateTime responseTime;
 
-    @ApiModelProperty(value = "调用耗时")
+    @ApiModelProperty(value = "调用耗时 单位ms")
+    @NotNull
+    private Long invokeCost;
+
+    @ApiModelProperty(value = "调用耗时格式化")
     @NotBlank
     @Size(max = 63)
-    private String invokeCost;
+    private String invokeCostFormat;
 
     @ApiModelProperty(value = "返回状态码")
     @NotBlank

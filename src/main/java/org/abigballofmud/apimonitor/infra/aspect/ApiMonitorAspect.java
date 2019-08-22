@@ -97,7 +97,9 @@ public class ApiMonitorAspect {
         // response_time
         dto.setResponseTime(LocalDateTime.now());
         // invoke_cost
-        dto.setInvokeCost(TimeUtil.timestamp2String(Duration.between(dto.getRequestTime(), dto.getResponseTime()).toMillis()));
+        dto.setInvokeCost(Duration.between(dto.getRequestTime(), dto.getResponseTime()).toMillis());
+        // invoke_cost_format
+        dto.setInvokeCostFormat(TimeUtil.timestamp2String(Duration.between(dto.getRequestTime(), dto.getResponseTime()).toMillis()));
     }
 
     @AfterReturning(pointcut = "pointcut()", returning = "object")

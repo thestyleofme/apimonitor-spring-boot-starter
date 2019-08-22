@@ -37,6 +37,7 @@ public class ApiMonitorRecord {
     public static final String FIELD_REQUEST_TIME = "requestTime";
     public static final String FIELD_RESPONSE_TIME = "responseTime";
     public static final String FIELD_INVOKE_COST = "invokeCost";
+    public static final String FIELD_INVOKE_COST_FORMAT = "invokeCostFormat";
     public static final String FIELD_RESPONSE_CODE = "responseCode";
     public static final String FIELD_RESPONSE_STATUS = "responseStatus";
     public static final String FIELD_RESPONSE_ENTITY = "responseEntity";
@@ -87,7 +88,9 @@ public class ApiMonitorRecord {
 
     private LocalDateTime responseTime;
 
-    private String invokeCost;
+    private Long invokeCost;
+
+    private String invokeCostFormat;
 
     private String responseCode;
 

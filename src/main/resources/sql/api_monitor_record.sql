@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mysql5.7.26
+ Source Server         : local_mysql5.7.26
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 21/08/2019 17:34:23
+ Date: 22/08/2019 09:49:19
 */
 
 SET NAMES utf8mb4;
@@ -37,11 +37,13 @@ CREATE TABLE `api_monitor_record`  (
   `request_param` varchar(511) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '请求参数',
   `request_time` datetime(0) NOT NULL COMMENT '请求时间',
   `response_time` datetime(0) NOT NULL COMMENT '返回时间',
-  `invoke_cost` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '调用耗时',
+  `invoke_cost` bigint(20) NOT NULL COMMENT '调用耗时',
+  `invoke_cost_format` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '调用耗时格式化',
   `response_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '返回状态码',
   `response_status` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '返回状态 SUCCESS FAIL',
   `response_entity` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL COMMENT '返回结果',
   `tenant_id` bigint(20) NULL DEFAULT NULL COMMENT '租户id',
+  `role_id` bigint(20) NULL DEFAULT NULL COMMENT '角色id',
   `object_version_number` bigint(20) NOT NULL DEFAULT 1,
   `creation_date` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `created_by` bigint(20) NOT NULL DEFAULT -1,

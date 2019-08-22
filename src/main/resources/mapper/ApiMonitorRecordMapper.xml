@@ -17,7 +17,8 @@
         <result column="request_param" property="requestParam" jdbcType="VARCHAR"/>
         <result column="request_time" property="requestTime" jdbcType="TIMESTAMP"/>
         <result column="response_time" property="responseTime" jdbcType="TIMESTAMP"/>
-        <result column="invoke_cost" property="invokeCost" jdbcType="VARCHAR"/>
+        <result column="invoke_cost" property="invokeCost" jdbcType="DECIMAL"/>
+        <result column="invoke_cost_format" property="invokeCostFormat" jdbcType="VARCHAR"/>
         <result column="response_code" property="responseCode" jdbcType="VARCHAR"/>
         <result column="response_status" property="responseStatus" jdbcType="VARCHAR"/>
         <result column="response_entity" property="responseEntity" jdbcType="VARCHAR"/>
