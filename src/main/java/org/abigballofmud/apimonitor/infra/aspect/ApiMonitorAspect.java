@@ -2,17 +2,17 @@ package org.abigballofmud.apimonitor.infra.aspect;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Optional;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.abigballofmud.apimonitor.api.dto.ApiMonitorRecordDTO;
 import org.abigballofmud.apimonitor.app.service.ApiMonitorRecordService;
 import org.abigballofmud.apimonitor.domain.entity.CallerInfo;
 import org.abigballofmud.apimonitor.infra.constant.CallerInfoConstants;
+import org.abigballofmud.apimonitor.infra.utils.ApiMonitorUtil;
 import org.abigballofmud.apimonitor.infra.utils.CallerInfoContextHolder;
 import org.abigballofmud.apimonitor.infra.utils.IpUtil;
 import org.abigballofmud.apimonitor.infra.utils.TimeUtil;
@@ -57,8 +57,8 @@ public class ApiMonitorAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
             HttpServletRequest request = attributes.getRequest();
-            // request_header
-            this.requestHeaderHandler(request);
+            // request_header request_param
+            ApiMonitorUtil.requestHeaderAndParamHandler(dto, request);
             // user_agent
             dto.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
             // referer
@@ -70,9 +70,9 @@ public class ApiMonitorAspect {
             // ip
             dto.setIp(IpUtil.getRealIpAddr(request));
             // class_method
-            dto.setClassMethod(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-            // request_param
-            dto.setRequestParam(Arrays.toString(joinPoint.getArgs()));
+            dto.setClassMethod(String.format("%s.%s()",
+                    joinPoint.getSignature().getDeclaringTypeName(),
+                    joinPoint.getSignature().getName()));
         }
     }
 
@@ -121,23 +121,6 @@ public class ApiMonitorAspect {
         // response_entity
         dto.setResponseEntity(exception.toString());
         this.callInfoHandler(dto);
-    }
-
-    private void requestHeaderHandler(HttpServletRequest request) {
-        ApiMonitorRecordDTO dto = apiMonitorRecordDTO.get();
-        Enumeration<String> headerNames = request.getHeaderNames();
-        HashMap<String, Object> map = new HashMap<>(16);
-        while (headerNames.hasMoreElements()) {
-            String element = headerNames.nextElement();
-            map.put(element, request.getHeader(element));
-        }
-        // request_header
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            dto.setRequestHeader(objectMapper.writeValueAsString(map));
-        } catch (JsonProcessingException e) {
-            log.error("request header[Map -> String] error!");
-        }
     }
 
     private void callInfoHandler(ApiMonitorRecordDTO dto) {
