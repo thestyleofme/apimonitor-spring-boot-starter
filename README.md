@@ -35,7 +35,7 @@ CREATE TABLE `api_monitor_record`  (
   `request_header` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '请求头',
   `user_agent` varchar(511) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT 'User-Agent',
   `class_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '请求的具体方法名  格式：类.方法',
-  `request_param` varchar(511) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '请求参数',
+  `request_param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL COMMENT '请求参数',
   `request_time` datetime(0) NOT NULL COMMENT '请求时间',
   `response_time` datetime(0) NOT NULL COMMENT '返回时间',
   `invoke_cost` bigint(20) NOT NULL COMMENT '调用耗时',
@@ -51,7 +51,7 @@ CREATE TABLE `api_monitor_record`  (
   `last_updated_by` bigint(20) NOT NULL DEFAULT -1,
   `last_update_date` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`monitor_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = 'API监控记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = 'API监控记录表' ROW_FORMAT = Dynamic;
 ```
 
 
