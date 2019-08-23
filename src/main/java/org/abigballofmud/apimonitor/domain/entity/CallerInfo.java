@@ -24,24 +24,34 @@ public class CallerInfo {
      */
     private Long serviceId;
 
+    private String serviceName;
+
     /**
      * 租户ID
      */
     private Long tenantId;
+
+    private String tenantName;
+
+    /**
+     * 角色ID
+     */
+    private Long roleId;
+
+    private String roleName;
 
     /**
      * 用户ID
      */
     private Long userId;
 
+    private String userName;
+
     /**
      * 客户端ID
      */
     private Long clientId;
 
-    /**
-     * 角色ID
-     */
-    private Long roleId;
+    private String clientName;
 
 }

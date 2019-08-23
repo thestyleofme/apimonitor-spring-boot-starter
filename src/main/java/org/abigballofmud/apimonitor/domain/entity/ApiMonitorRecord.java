@@ -24,9 +24,12 @@ public class ApiMonitorRecord {
     public static final String FIELD_MONITOR_ID = "monitorId";
     public static final String FIELD_REQUEST_ID = "requestId";
     public static final String FIELD_SERVICE_ID = "serviceId";
+    public static final String FIELD_SERVICE_NAME = "serviceName";
     public static final String FIELD_IP = "ip";
     public static final String FIELD_USER_ID = "userId";
+    public static final String FIELD_USER_NAME = "userName";
     public static final String FIELD_CLIENT_ID = "clientId";
+    public static final String FIELD_CLIENT_NAME = "clientName";
     public static final String FIELD_REQUEST_URL = "requestUrl";
     public static final String FIELD_REQUEST_METHOD = "requestMethod";
     public static final String FIELD_REQUEST_HEADER = "requestHeader";
@@ -42,7 +45,9 @@ public class ApiMonitorRecord {
     public static final String FIELD_RESPONSE_STATUS = "responseStatus";
     public static final String FIELD_RESPONSE_ENTITY = "responseEntity";
     public static final String FIELD_TENANT_ID = "tenantId";
+    public static final String FIELD_TENANT_NAME = "tenantName";
     public static final String FIELD_ROLE_ID = "roleId";
+    public static final String FIELD_ROLE_NAME = "roleName";
     public static final String FIELD_CREATION_DATE = "creationDate";
     public static final String FIELD_CREATED_BY = "createdBy";
     public static final String FIELD_LAST_UPDATE_DATE = "lastUpdateDate";
@@ -112,5 +117,15 @@ public class ApiMonitorRecord {
 
     @Version
     private Long objectVersionNumber;
+
+    private String serviceName;
+
+    private String tenantName;
+
+    private String userName;
+
+    private String clientName;
+
+    private String roleName;
 
 }

@@ -127,10 +127,15 @@ public class ApiMonitorAspect {
         // 返回信息必须含有调用方信息 serviceId tenantId userId clientId
         CallerInfo callerInfo = CallerInfoContextHolder.current();
         dto.setServiceId(Optional.ofNullable(callerInfo.getServiceId()).orElse(CallerInfoConstants.DEFAULT_SERVICE_ID));
+        dto.setServiceName(Optional.ofNullable(callerInfo.getServiceName()).orElse(CallerInfoConstants.DEFAULT_SERVICE_NAME));
         dto.setTenantId(Optional.ofNullable(callerInfo.getTenantId()).orElse(CallerInfoConstants.DEFAULT_TENANT_ID));
+        dto.setTenantName(Optional.ofNullable(callerInfo.getTenantName()).orElse(CallerInfoConstants.DEFAULT_TENANT_NAME));
         dto.setUserId(Optional.ofNullable(callerInfo.getUserId()).orElse(CallerInfoConstants.DEFAULT_USER_ID));
+        dto.setUserName(Optional.ofNullable(callerInfo.getUserName()).orElse(CallerInfoConstants.DEFAULT_USER_NAME));
         dto.setClientId(Optional.ofNullable(callerInfo.getClientId()).orElse(CallerInfoConstants.DEFAULT_CLIENT_ID));
+        dto.setClientName(Optional.ofNullable(callerInfo.getClientName()).orElse(CallerInfoConstants.DEFAULT_CLIENT_NAME));
         dto.setRoleId(Optional.ofNullable(callerInfo.getRoleId()).orElse(CallerInfoConstants.DEFAULT_ROLE_ID));
+        dto.setRoleName(Optional.ofNullable(callerInfo.getRoleName()).orElse(CallerInfoConstants.DEFAULT_ROLE_NAME));
         log.debug("ApiMonitorRecordDTO: {}", dto);
         // 新增API监控记录
         apiMonitorRecordService.insert(dto);

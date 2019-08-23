@@ -130,4 +130,19 @@ public class ApiMonitorRecordDTO {
     @ApiModelProperty(hidden = true)
     private Long objectVersionNumber;
 
+    @ApiModelProperty(value = "服务名称")
+    private String serviceName;
+
+    @ApiModelProperty(value = "租户名称")
+    private String tenantName;
+
+    @ApiModelProperty(value = "用户名称")
+    private String userName;
+
+    @ApiModelProperty(value = "客户端名称")
+    private String clientName;
+
+    @ApiModelProperty(value = "角色名称")
+    private String roleName;
+
 }

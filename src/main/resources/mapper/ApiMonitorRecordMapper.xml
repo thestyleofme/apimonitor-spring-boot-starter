@@ -4,11 +4,15 @@
     <!-- 可根据自己的需求，是否要使用 -->
     <resultMap id="BaseResultMap" type="org.abigballofmud.apimonitor.domain.entity.ApiMonitorRecord">
         <result column="monitor_id" property="monitorId" jdbcType="DECIMAL"/>
-        <result column="request_id" property="requestId" jdbcType="VARCHAR"/>
         <result column="service_id" property="serviceId" jdbcType="DECIMAL"/>
+        <result column="service_name" property="serviceName" jdbcType="VARCHAR"/>
+        <result column="request_id" property="requestId" jdbcType="VARCHAR"/>
+        <result column="referer" property="referer" jdbcType="VARCHAR"/>
         <result column="ip" property="ip" jdbcType="VARCHAR"/>
         <result column="user_id" property="userId" jdbcType="DECIMAL"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="client_id" property="clientId" jdbcType="DECIMAL"/>
+        <result column="client_name" property="clientName" jdbcType="VARCHAR"/>
         <result column="request_url" property="requestUrl" jdbcType="VARCHAR"/>
         <result column="request_method" property="requestMethod" jdbcType="VARCHAR"/>
         <result column="request_header" property="requestHeader" jdbcType="VARCHAR"/>
@@ -23,6 +27,9 @@
         <result column="response_status" property="responseStatus" jdbcType="VARCHAR"/>
         <result column="response_entity" property="responseEntity" jdbcType="VARCHAR"/>
         <result column="tenant_id" property="tenantId" jdbcType="DECIMAL"/>
+        <result column="tenant_name" property="tenantName" jdbcType="VARCHAR"/>
+        <result column="role_id" property="roleId" jdbcType="DECIMAL"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
         <result column="object_version_number" property="objectVersionNumber" jdbcType="DECIMAL"/>
         <result column="creation_date" property="creationDate" jdbcType="TIMESTAMP"/>
         <result column="created_by" property="createdBy" jdbcType="DECIMAL"/>
