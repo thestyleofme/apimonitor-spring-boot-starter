@@ -3,6 +3,7 @@ package org.abigballofmud.apimonitor.infra.config;
 import lombok.EqualsAndHashCode;
 import org.abigballofmud.apimonitor.app.service.ApiMonitorRecordService;
 import org.abigballofmud.apimonitor.infra.aspect.ApiMonitorAspect;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,9 @@ import org.springframework.context.annotation.Configuration;
 @EqualsAndHashCode(callSuper = false)
 @Configuration
 @ComponentScan("org.abigballofmud.apimonitor")
+@MapperScan({
+        "org.abigballofmud.**.mapper"
+})
 public class ApiMonitorConfiguration {
 
     @Bean

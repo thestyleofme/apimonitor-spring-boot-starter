@@ -23,6 +23,7 @@ public class TestServiceImpl implements TestService {
         log.debug("=======hello()=======");
         CallerInfo callerInfo = CallerInfo.builder().
                 serviceId(CallerInfoConstants.DEFAULT_SERVICE_ID).
+                serviceName("TEST").
                 tenantId(CallerInfoConstants.DEFAULT_TENANT_ID).
                 userId(CallerInfoConstants.DEFAULT_USER_ID).
                 clientId(CallerInfoConstants.DEFAULT_CLIENT_ID).
