@@ -18,7 +18,7 @@
         <mybatis.plus.version>3.1.2</mybatis.plus.version>
         <mybatis.version>3.5.2</mybatis.version>
         <mybatis.spring.version>2.0.2</mybatis.spring.version>
-        <swagger2.ui>2.9.2</swagger2.ui>
+        <swagger2.ui>2.10.0</swagger2.ui>
         <org.mapstruct.version>1.3.0.Final</org.mapstruct.version>
         <lombok.version>1.18.6</lombok.version>
     </properties>
